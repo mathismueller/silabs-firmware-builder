@@ -1,0 +1,26 @@
+using "platforms/cpus/silabs/efr32s2/efr32mg24.repl"
+
+// EFR32MG24A020F1024IM40: device number 20, 1 MB flash
+deviceInformation:
+    deviceNumber: 20
+
+// NOTE: the real A020 silicon is a +10 dBm part, but Renode's radio model only
+// accepts the sequencer image when the +20 dBm PA is declared (same as ZBT-2).
+// This is simulation-only and has no effect on the built firmware or hardware.
+radio:
+    pa0DbmSupport: true
+    pa10DbmSupport: false
+    pa20DbmSupport: true
+
+sram:
+    size: 0x40000
+
+flash:
+    size: 0xFE000
+
+lockbitsdata: Miscellaneous.SiLabs.EFR32xG2_LockbitsData @ sysbus 0x080FE000
+    size: 0x2000
+
+msc:
+    flashSize: 0x100000
+    flashPageSize: 0x2000

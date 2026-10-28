@@ -5,6 +5,9 @@ filename: "{manifest_name}_{ezsp_version}_{fw_variant}_{baudrate}"
 sdk: "simplicity_sdk:2026.6.1"
 toolchain: "gcc:14.2.1.20241119"
 
+simulation:
+  board: alphorn_gateway
+
 gbl:
   fw_type: zigbee_ncp
   ezsp_version: dynamic

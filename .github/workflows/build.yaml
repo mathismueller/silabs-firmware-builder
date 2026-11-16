@@ -294,7 +294,7 @@ jobs:
         manifest: ${{ fromJson(needs.list-manifests.outputs.simulation_matrix) }}
     env:
       RENODE_VERSION: 1.17.0
-      RENODE_SHA256: 4ba7c68b59e244f4b4b112fcccd280cc4582e5605a5f
+      RENODE_SHA256: 4ba7c68b59e2447f188ef4b4b112fcccd2802582c460beedceb63b84e5605a5f
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:

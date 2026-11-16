@@ -1,6 +1,6 @@
-name: Hornbach Gateway V2 Z-Wave Controller
+name: GearHub H3 Z-Wave Controller
 device: EFR32ZG23A010F512GM40
-base_project: src/alphorn_zwave_controller
+base_project: src/gearhub_zwave_controller
 filename: "{manifest_name}_{zwave_version}"
 sdk: "simplicity_sdk:2026.6.1"
 toolchain: "gcc:14.2.1.20241119"

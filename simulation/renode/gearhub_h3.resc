@@ -1,5 +1,5 @@
-:name: Alphorn Gateway V2
-:description: Boots an Alphorn Gateway V2 firmware ELF ($bin) on the EFR32MG24 model, with the host UART on TCP $uart_port.
+:name: GearHub H3
+:description: Boots a GearHub H3 firmware ELF ($bin) on the EFR32MG24 model, with the host UART on TCP $uart_port.
 
 $uart_port?=3456
 
@@ -11,8 +11,8 @@ emulation SetGlobalQuantum "0.0005"
 include $ORIGIN/models/EFR32xG2_EMU_3_ResetCause.cs
 include $ORIGIN/models/EFR32xG2_UserDataErased.cs
 
-mach create "alphorn_gateway"
-machine LoadPlatformDescription $ORIGIN/alphorn_gateway.repl
+mach create "gearhub_h3"
+machine LoadPlatformDescription $ORIGIN/gearhub_h3.repl
 
 # The stock EMU reads RSTCAUSE as 0; EmberZNet then treats every boot as an unknown reset and ASH sends ERROR
 sysbus Unregister sysbus.emu
@@ -42,8 +42,8 @@ cpu PerformanceInMips 15
 # Renode wipes RAM on machine reset, but SRAM survives a soft reset on silicon and the firmware relies on it: .noinit
 # carries the reset cause and crash info, and 0x20000000 the bootloader reset word. Stash all of SRAM when the firmware
 # resets the system and put it back before the startup code runs.
-cpu AddHook `sysbus GetSymbolAddress "CORE_ResetSystem"` "from System import AppDomain; AppDomain.CurrentDomain.SetData('alphorn_gateway.sram', cpu.Bus.ReadBytes(0x20000000, 0x40000))"
-cpu AddHook `sysbus GetSymbolAddress "Reset_Handler"` "from System import AppDomain; d = AppDomain.CurrentDomain; s = d.GetData('alphorn_gateway.sram'); s is not None and cpu.Bus.WriteBytes(s, 0x20000000); d.SetData('alphorn_gateway.sram', None)"
+cpu AddHook `sysbus GetSymbolAddress "CORE_ResetSystem"` "from System import AppDomain; AppDomain.CurrentDomain.SetData('gearhub_h3.sram', cpu.Bus.ReadBytes(0x20000000, 0x40000))"
+cpu AddHook `sysbus GetSymbolAddress "Reset_Handler"` "from System import AppDomain; d = AppDomain.CurrentDomain; s = d.GetData('gearhub_h3.sram'); s is not None and cpu.Bus.WriteBytes(s, 0x20000000); d.SetData('gearhub_h3.sram', None)"
 
 # Crash diagnostics
 cpu AddHook `sysbus GetSymbolAddress "RAILCb_AssertFailed"` "self.Log(LogLevel.Error, 'RAIL ASSERT code=%d lr=0x%x' % (self.GetRegister(1).RawValue, self.GetRegister(14).RawValue))"
